@@ -1,0 +1,919 @@
+[
+ {
+  "id": 1,
+  "source": "B模块试题.txt",
+  "path": "模块B：服务部署 › Windows初始化环境",
+  "text": "一、Windows初始化环境\n默认账号及默认密码\nUsername: Administrator\nPassword: ChinaSkill23!\nUsername: demo\nPassword: ChinaSkill23!\n注：若非特别指定，所有账号的密码均为ChinaSkill23!",
+  "chars": 143
+ },
+ {
+  "id": 2,
+  "source": "B模块试题.txt",
+  "path": "模块B：服务部署 › Windows项目任务描述",
+  "text": "二、Windows项目任务描述\n你作为一个技术工程师，被指派去构建一个公司的内部网络，要为员工提供便捷、安全稳定内外网络服务。你必须在规定的时间内完成要求的任务，并进行充分的测试，确保设备和应用正常运行。任务所有规划都基于Windows操作系统，请根据网络拓扑、基本配置信息和服务需求完成网络服务安装与测试，网络拓扑图和基本配置信息如下：",
+  "chars": 169
+ },
+ {
+  "id": 3,
+  "source": "B模块试题.txt",
+  "path": "模块B：服务部署 › Windows项目任务描述 › 网络地址规划",
+  "text": "（二）网络地址规划\n服务器和客户端基本配置如下表，各虚拟机已预装系统。",
+  "chars": 35
+ },
+ {
+  "id": 4,
+  "source": "B模块试题.txt",
+  "path": "模块B：服务部署 › Windows项目任务描述 › 网络地址规划",
+  "text": "DCServer\nchinaskills.com\n192.168.100.100/24\n127.0.0.1\n192.168.100.254\nSDCServer\nchinaskills.com\n192.168.100.200/24\n127.0.0.1\n192.168.100.100\n192.168.100.254\nAppSrv\nchinaskills.com\n192.168.200.100/24\n192.168.100.100\n192.168.100.200\n192.168.200.254\nIOMSrv\nchinaskills.com\n192.168.200.200/24\n192.168.100.100\n192.168.100.200\n192.168.200.254\nRouterSrv1\nchinaskills.com\n192.168.100.254/24\n192.168.0.254/24\n192.168.200.254/24\n100.100.100.251/24\n192.168.100.100\n100.100.100.254\nIspSrv\n保持工作组状态\n100.100.100.100/24\n127.0.0.1\n无\nInsideCli\nchinaskills.com\n192.168.0.0/24(dhcp)\n192.168.100.100\n192.168.100.200\n192.168.0.254\nOutsideCli\n保持工作组状态\n100.100.100.10/24\n100.100.100.100\n100.100.100.254",
+  "chars": 677
+ },
+ {
+  "id": 5,
+  "source": "B模块试题.txt",
+  "path": "模块B：服务部署 › Windows项目任务清单 › 服务器IspSrv上的工作任务",
+  "text": "（一）服务器IspSrv上的工作任务\n互联网访问检测服务器\n为了模拟Internet访问测试，请搭建网卡互联网检测服务。\nDNS（域名解析服务）\n安装DNS服务器，根据题目创建必要正向区域和反向区域的DNS解析。\n把当前机器作为互联网根域服务器，创建test1.com~test100.com，并在所有正向区域中创建一条 A 记录，解析到本机地址。",
+  "chars": 174
+ },
+ {
+  "id": 6,
+  "source": "B模块试题.txt",
+  "path": "模块B：服务部署 › Windows项目任务清单 › 服务器RouterSrv1上的工作任务",
+  "text": "（二）服务器RouterSrv1上的工作任务\n路由功能\n安装Remote Access 服务开启路由转发，为当前实验环境提供路由功能。\n启用网络地址转换功能，实现内部客户端访问互联网资源。\n配置网络地址转换，允许互联网区域客户端访问AppSrv上的HTTP资源。\n动态地址分配中继服务\n安装和配置dhcp relay服务，为办公区域网络提供地址上网。\nDHCP服务器位于AppSrv服务器上。\n虚拟专用网络\n设置L2TP/IPSec，IKE通道采用证书进行验证。\nL2TP通道使用chinaskills.com域内用户进行身份验证，仅允许manager组内用户通过身份证验证。\n对于vpn客户端，请使用范围 192.168.1.200-192.168.1.220/24。\nRDS\n在RouterSrv1安装和配置 RDS 服务，用户通过“https://app.chinaskills.com/rdweb”进行访问。\n该页面无证书警告。\n用户可以获取以下应用：\nNotepad",
+  "chars": 438
+ },
+ {
+  "id": 7,
+  "source": "B模块试题.txt",
+  "path": "模块B：服务部署 › Windows项目任务清单 › 服务器AppSrv上的工作任务",
+  "text": "（三）服务器AppSrv上的工作任务\n万维网服务\n在AppSrv上搭建网站服务器。\n将访问http://www.chinaskills.com的http的请求重定向到https://www.chinaskills.com站点。\n网站内容设置为“该页面为www.chinaskills.com测试页！”。\n将当前web根目录的设置为d:\\wwwroot目录。\n启用windows身份验证，只有通过身份验证的用户才能访问到该站点，manager用户组成员使用IE浏览器打开不提示认证，直接访问。\n设置“http://www.chinaskills.com/”网站的最大连接数为1000，网站连接超时为60sl；\n使用W3C记录日志；每天创建一个新的日志文件，文件名格式:\n日志只允许记录日期、时间、客户端IP地址、用户名、服务器IP地址、服务器端口号；\n日志文件存储到“C:\\WWWLogFile”目录中；\n配置IIS配套FTP服务：\n匿名用户上传的文件都将映射为ftp2用户\nftp在登录前显示Banner消息：\n“Hello, unauthorized login is prohibited!”\n动态地址分配服务\n安装和配置dhcp服务，为办公区域网络提供地址上网。\n地址池范围：192.168.0.100-192.168.0.200。\nDFS\n在appSrv上安装及配置 DFS 服务。\n目录设置在F：\\DFSsharedir。\n配置DFS复制，使用DC1作为次要服务器，复制方式配置为交错拓扑。\n在F：\\DFSsharedir文件夹内新建所有部门的文件夹。",
+  "chars": 681
+ },
+ {
+  "id": 8,
+  "source": "B模块试题.txt",
+  "path": "模块B：服务部署 › Windows项目任务清单 › 服务器AppSrv上的工作任务",
+  "text": "所有部门的用户之可以访问部门内的文件，不可以跨部门访问别的部门文件夹内容。\nManagement用户组用户可以访问全局的文件夹。\n磁盘管理\n安装及配置软 RAID5。\n在安装好的AppSrv虚拟机中添加三块10 G虚拟磁盘。\n组成RAID5，磁盘分区命名为卷标F盘：Raid5。\n手动测试破坏一块磁盘，做RAID磁盘修复；确认RAID5配置完毕。\nWSUS更新服务\n安装WSUS更新服务，更新补丁目录设置为“c:\\wsusbackup”\n创建更新组名称为“CHINASKILLS-WSUS”。\n每天凌晨03:00下发自动更新。\n更新服务器地址为“http://wsus.chinaskills.com:8530”。",
+  "chars": 307
+ },
+ {
+  "id": 9,
+  "source": "B模块试题.txt",
+  "path": "模块B：服务部署 › Windows项目任务清单 › 服务器DCSERVER&SDCSERVER上的工作任务",
+  "text": "（四）服务器DCSERVER&SDCSERVER上的工作任务\n活动目录域服务\n在DCSERVER和SDCSERVER服务器上安装活动目录域服务，DCSERVER作为主域控，SDCSERVER作为备份域控，活动目录域名为：chinaskills.com。\n域用户能够使用[username]@csk.cn进行登录。\n创建一个名为“CSK”的OU，并新建以下域用户和组：\nsa01-sa20，请将该用户添加到sales用户组。\nit01-it20，请将该用户添加到IT用户组。\nma01-ma10，请将该用户添加到manager用户组。\n许除manager 组和IT组，所有用户隐藏C盘。\n除manager 组和IT组，所有普通给用户禁止使用cmd。\n所有用户的IE浏览器首页设置为“https://www.chinaskills.com”。\n域内的所有计算机（除dc外），当dc服务器不可用时，禁止使用缓存登录。\n证书颁发机构\n在DCSERVER服务器上安装证书办法机构。\n定义名称：CSK2023-ROOTCA。\n证书颁发机构有效期：3 years。\n为chinaskills.com域内的web站点颁发web证书。\n当前拓扑内所有机器必须信任该证书颁发机构。\n所域内所有计算机自动颁发一张计算机证书。\n磁盘管理\n在DC2上安装及配置软 RAID5。\n在安装好的DC2虚拟机中添加三块10G虚拟磁盘。\n组成RAID5，磁盘分区命名为卷标H盘：Raid5。\n手动测试破坏一块磁盘，做RAID磁盘修复，确认RAID5配置完毕。",
+  "chars": 661
+ },
+ {
+  "id": 10,
+  "source": "B模块试题.txt",
+  "path": "模块B：服务部署 › Windows项目任务清单 › 服务器DCSERVER&SDCSERVER上的工作任务",
+  "text": "NPS (网络策略服务)\n在DCServer.上安装网络策略服务作为VPN用户登录验证;。\n仅允许L2T/IPSEC VPN 进行VPN连接访问验证。",
+  "chars": 75
+ },
+ {
+  "id": 11,
+  "source": "B模块试题.txt",
+  "path": "模块B：服务部署 › Windows项目任务清单 › 服务器IOMSrv上的工作任务",
+  "text": "（五）服务器IOMSrv上的工作任务\n图形界面登陆运维平台，登陆地址http://192.168.200.200:8080/imc\n通过Windows代理模板，添加DCServer、SDCSserver、AppSrv操作系统监控对象，查看运行状态。\n通过中间件IIS模板，添加IIS监控对象，查看运行状态。\n通过新增WEB探测对象，监控门户网站http://www.chinaskills.com，查看运行状态。\n基在运维概况完成应用监控，应用拓扑添加并在大屏上呈现",
+  "chars": 233
+ },
+ {
+  "id": 12,
+  "source": "B模块试题.txt",
+  "path": "模块B：服务部署 › Windows项目任务清单 › 客户端InsideCli上的工作任务",
+  "text": "（六）客户端InsideCli上的工作任务\n按照要求将该主机加入到对应区域的域。\n设置电源配置，以便客户端在通电的情况下，永不进入睡眠。\n该客户端用于测试用户登录，Profiles，文件共享，安全策略和RDS等功能。",
+  "chars": 108
+ },
+ {
+  "id": 13,
+  "source": "B模块试题.txt",
+  "path": "模块B：服务部署 › Windows项目任务清单 › 客户端OutsideCli上的工作任务",
+  "text": "（七）客户端OutsideCli上的工作任务\n该主机不允许加入域。\n添加一个名为Connect-CSK 的VPN拨号器，用于连接到chinaskills.com域网络，不记录用户名称密码信息。\n设置电源配置，以便客户端在通电的情况下，永不进入睡眠。\n该客户端用于测试用户登录，Profiles，文件共享，安全策略和RDS等功能。",
+  "chars": 164
+ },
+ {
+  "id": 14,
+  "source": "B模块试题.txt",
+  "path": "模块B：服务部署 › Linux初始化环境 › 默认账号及默认密码",
+  "text": "（一）默认账号及默认密码\nUsername:  root\nPassword: ChinaSkill23!\nUsername: skills\nPassword: ChinaSkill23!\n注：若非特别指定，所有账号的密码均为 ChinaSkill23!",
+  "chars": 126
+ },
+ {
+  "id": 15,
+  "source": "B模块试题.txt",
+  "path": "模块B：服务部署 › Linux初始化环境 › 操作系统配置",
+  "text": "（二）操作系统配置\n所处区域：CST + 8\n系统环境语言：English US (UTF-8)\n键盘：English US\n注意：当任务是配置TLS，请把根证书或者自签名证书添加到受信任区。\n控制台登陆后不管是网络登录还是本地登录 ，都按下方欢迎信息内容显示\n*********************************\nChinaSkills 2023–CSK\nModule C Linux\n>>hostname<<\n>>System Version<<\n>> TIME <<\n*********************************",
+  "chars": 277
+ },
+ {
+  "id": 16,
+  "source": "B模块试题.txt",
+  "path": "模块B：服务部署 › Linux项目任务描述",
+  "text": "五、Linux项目任务描述\n你作为一个Linux的技术工程师，被指派去构建一个公司的内部网络，要为员工提供便捷、安全稳定内外网络服务。你必须在规定的时间内完成要求的任务，并进行充分的测试，确保设备和应用正常运行。任务所有规划都基于Linux操作系统，请根据网络拓扑、基本配置信息和服务需求完成网络服务安装与测试，网络拓扑图和基本配置信息如下：",
+  "chars": 171
+ },
+ {
+  "id": 17,
+  "source": "B模块试题.txt",
+  "path": "模块B：服务部署 › Linux项目任务描述 › 网络地址规划",
+  "text": "（二）网络地址规划\n服务器和客户端基本配置如下表，各虚拟机已预装系统。ISPSRV（UOS）完全限定域名：ispsrv普通用户/登录密码：skills/ChinaSkill23超级管理员/登录密码：root/ChinaSkill23网络地址/掩码/网关：81.6.63.100/24/无AppSrv(Centos)完全限定域名：appsrv.chinaskills.cn普通用户/登录密码：skills/ChinaSkill23超级管理员/登录密码：root/ChinaSkill23网络地址/掩码/网关：192.168.100.100/24/192.168.100.254IOMSrv(Centos)网络地址/掩码/网关：192.168.100.150/24/192.168.100.254STORAGESRV(Centos)完全限定域名：storagesrv.chinaskills.cn普通用户/登录密码：skills/ChinaSkill23超级管理员/登录密码：root/ChinaSkill23网络地址/掩码/网关：192.168.100.200/24/192.168.100.254ROUTERSRV(Centos)完全限定域名：routersrv.chinaskills.cn普通用户/登录密码：skills/ChinaSkill23超级管理员/登录密码：root/ChinaSkill23网络地址/掩码/网关： 192.168.100.254/24/无、192.168.0.254/24/无、81.6.63.254/24/无INSIDECLI(Centos)",
+  "chars": 688
+ },
+ {
+  "id": 18,
+  "source": "B模块试题.txt",
+  "path": "模块B：服务部署 › Linux项目任务描述 › 网络地址规划",
+  "text": "完全限定域名：insidecli.chinaskills.cn普通用户/登录密码：skills/ChinaSkill23超级管理员/登录密码：root/ChinaSkill23网络地址/掩码/网关：DHCP From AppSrvOUTSIDECLI（UOS）完全限定域名：outsidecli.chinaskills.cn普通用户/登录密码：skills/ChinaSkill23超级管理员/登录密码：root/ChinaSkill23网络地址/掩码/网关：DHCP From IspSrv",
+  "chars": 246
+ },
+ {
+  "id": 19,
+  "source": "B模块试题.txt",
+  "path": "模块B：服务部署 › Linux项目任务清单 › 服务器IspSrv工作任务",
+  "text": "（一）服务器IspSrv工作任务\nDHCP\n为OutsideCli客户端网络分配地址，地址池范围：81.6.63.110-81.6.63.190/24；\n域名解析服务器：按照实际需求配置DNS服务器地址选项；\n网关：按照实际需求配置网关地址选项；\nDNS\n配置为DNS根域服务器；\n其他未知域名解析,统一解析为该本机IP；\n创建正向区域“chinaskills.cn”；\n类型为Slave；\n主服务器为“AppSrv”；\nWEB服务\n安装nginx软件包；\n配置文件名为ispweb.conf，放置在/etc/nginx/conf.d/目录下；\n网站根目录为/mut/crypt（目录不存在需创建）；\n启用FastCGI功能，让nginx能够解析php请求；\nindex.php内容使用Welcome to 2023 Computer Network Application contest!",
+  "chars": 396
+ },
+ {
+  "id": 20,
+  "source": "B模块试题.txt",
+  "path": "模块B：服务部署 › Linux项目任务清单 › 服务器RouterSrv上的工作任务",
+  "text": "（二）服务器RouterSrv上的工作任务\nDHCP RELAY\n安装DHCP中继；\n允许客户端通过中继服务获取网络地址；\nROUTING\n开启路由转发，为当前实验环境提供路由功能。\n根据题目要求，配置单臂路由实现内部客户端和服务器之间的通信。\nSSH\n工作端口为2023；\n只允许用户user01，密码ChinaSkill23登录到router。其他用户（包括root）不能登录，创建一个新用户，新用户可以从本地登录，但不能从ssh远程登录。\n通过ssh登录尝试登录到RouterSrv，一分钟内最多尝试登录的次数为3次，超过后禁止该客户端网络地址访问ssh服务。\nIPTABLES\n添加必要的网络地址转换规则，使外部客户端能够访问到内部服务器上的dns、mail、web和ftp服务。\nINPUT、OUTPUT和FOREARD链默认拒绝（DROP）所有流量通行。\n配置源地址转换允许内部客户端能够访问互联网区域。\nWeb Proxy\n安装Nginx组件；\n配置文件名为proxy.conf，放置在/etc/nginx/conf.d/目录下；\n为www.chinaskills.cn配置代理前端，通过HTTPS的访问后端Web服务器；\n后端服务器日志内容需要记录真实客户端的IP地址。\n缓存后端Web服务器上的静态页面。\n创建服务监控脚本：/shells/chkWeb.sh\n编写脚本监控公司的网站运行情况；\n脚本可以在后台持续运行；\n每隔3S检查一次网站的运行状态，如果发现异常尝试3次；\n如果确定网站无法访问，则返回用户“网站正在维护中，请您稍后再试”的页面。",
+  "chars": 683
+ },
+ {
+  "id": 21,
+  "source": "B模块试题.txt",
+  "path": "模块B：服务部署 › Linux项目任务清单 › 服务器AppSrv上的工作任务",
+  "text": "（三）服务器AppSrv上的工作任务\nSSH\n安装SSH，工作端口监听在2101。\n仅允许InsideCli客户端进行ssh访问，其余所有主机的请求都应该拒绝。\n在cskadmin用户环境下可以免秘钥登录，并且拥有root控制权限。\nDHCP\n为InsideCli客户端网络分配地址，地址池范围：192.168.0.110-192.168.0.190/24；\n域名解析服务器：按照实际需求配置DNS服务器地址选项；\n网关：按照实际需求配置网关地址选项；\n为InsideCli分配固定地址为192.168.0.190/24。\nDNS\n为chinaskills.cn域提供域名解析。\n为www.chinaskills.cn、download.chinaskills.cn和mail.chinaskills.cn提供解析。\n启用内外网解析功能，当内网客户端请求解析的时候，解析到对应的内部服务器地址，当外部客户端请求解析的时候，请把解析结果解析到提供服务的公有地址。\n请将IspSrv作为上游DNS服务器，所有未知查询都由该服务器处理。\nweb服务\n安装web服务；\n服务以用户webuser系统用户运行；\n限制web服务只能使用系统500M物理内存；\n全站点启用TLS访问，使用本机上的“CSK Global Root CA”颁发机构颁发，网站证书信息如下：\nC = CN\nST = China\nL = BeiJing\nO = skills\nOU = Operations Departments\nCN = *.chinaskills.cn\n客户端访问https时应无浏览器（含终端）安全警告信息；",
+  "chars": 697
+ },
+ {
+  "id": 22,
+  "source": "B模块试题.txt",
+  "path": "模块B：服务部署 › Linux项目任务清单 › 服务器AppSrv上的工作任务",
+  "text": "当用户使用http访问时自动跳转到https安全连接；\n搭建www.chinaskills.cn站点；\n网页文件放在StorgeSrv服务器上；\n在AppSrv上安装MriaDB，在本机上安装PHP，发布WordPress网站；\nMariaDB数据库管理员信息：User: root/ Password: Chinaskill23!。\n创建网站download.chinaskills.cn站点;\n仅允许zsusers,lsusr用户访问；\n网页文件存放在StorageSrv服务器上；\n在该站点的根目录下创建以下文件“test.mp3, test.mp4, test.pdf”，其中test.mp4文件的大小为100M，页面访问成功后能够列出目录所有文件。\n作安全加固，在任何页面不会出现系统和WEB服务器版本信息。\nMAIL\n安装配置postfix和dovecot，启用imaps和smtps，并创建测试用户mailuser1和mailuser2。\n使用mailuser1@chinaskills.cn的邮箱向mailuser2@chinaskills.cn的邮箱发送一封测试邮件，邮件标题为“just test mail from mailuser1”, 邮件内容为“hello , mailuser2”。\n使用mailuser2@chinaskills.cn的邮箱向mailuser1@chinaskills.cn的邮箱发送一封测试邮件，邮件标题为“just test mail from mailuser2”, 邮件内容为“hello , mailuser1”。",
+  "chars": 686
+ },
+ {
+  "id": 23,
+  "source": "B模块试题.txt",
+  "path": "模块B：服务部署 › Linux项目任务清单 › 服务器AppSrv上的工作任务",
+  "text": "CA（证书颁发机构）\nCA根证书路径/csk-rootca/csk-ca.pem；\n签发数字证书，颁发者信息：(仅包含如下信息)\nC = CN\nST = China\nL = BeiJing\nO = skills\nOU = Operations Departments\nCN = CSK Global Root CA",
+  "chars": 157
+ },
+ {
+  "id": 24,
+  "source": "B模块试题.txt",
+  "path": "模块B：服务部署 › Linux项目任务清单 › 服务器StorageSrv上的工作任务",
+  "text": "（四）服务器StorageSrv上的工作任务\nSSH\n安装openssh组件；\n创建的user01 、 user02用户允许访问ssh服务；\n服务器本地root用户不允许访问；\n修改SSH服务默认端口，启用新端口 3358；\n添加用户user01  user02 到sudo组；用于远程接入，提权操作。\nDISK\n添加大小均为10G的虚拟磁盘，配置raid-5磁盘。\n创建LVM命名为/dev/vg01/lv01，大小为10G，格式化为ext4，挂在到本地目录/webdata，在分区内建立测试空文件disk.txt。\nNFS\n共享/webdata/目录；\n用于存储AppSrv主机的WEB数据；\n仅允许AppSrv主机访问该共享。\nDBMS\n在StorageSrv上完成MariaDB数据库的安装，添加数据库root用户密码为ChinaSkill23!\n安装MariaDB 数据库服务器组件;\nMariaDB数据库管理员信息：User: root/ Password: Chinaskill23!；\n安装MariaDB WEB 管理面板 “phpMyAdmin”，通过apache 进行发布\n安装phpMyAdmin ，MariaDB 的web管理面板组件；\n安装apache，配置php环境，用于发布phpMyAdmin；\nLDAP\n安装openldap,为apache服务提供账户认证；创建chinaskills.cn目录服务，并创建用户组ldsgp ,将zsuser、lsusr、wuusr。",
+  "chars": 650
+ },
+ {
+  "id": 25,
+  "source": "B模块试题.txt",
+  "path": "模块B：服务部署 › Linux项目任务清单 › 服务器StorageSrv上的工作任务",
+  "text": "VSFTPD\n禁止使用不安全的FTP，请使用“CSK Global Root CA”证书颁发机构，颁发的证书，启用FTPS服务；\n用户webadmin，登录ftp服务器，根目录为/webdata/；\n登录后限制在自己的根目录;\n允许WEB管理员上传和下载文件，但是禁止上传后缀名为.doc .docx .xlsx的文件。\n限制用户的下载最大速度为100kb/s；最大同一IP在线人数为2人；\n用于通过工具或者浏览器下载的最大速度不超过 100kb/s\n一个IP地址同时登陆的用户进程/人数不超过2人。",
+  "chars": 250
+ },
+ {
+  "id": 26,
+  "source": "B模块试题.txt",
+  "path": "模块B：服务部署 › Linux项目任务清单 › 服务器IOMSrv工作任务",
+  "text": "（五）服务器IOMSrv工作任务\n图形界面登陆IOMSrv运维平台，登陆地址http://192.168.100.150:8080/imc；\n通过Linux代理模板，添加RouterSrv、StorageSrv、AppSrv操作系统监控对象，查看运行状态；\n通过中间件Nginx模板，添加Nginx监控对象，查看运行状态；\n通过中间件MySQL数据库Agent模板，添加Mariadb监控对象，查看运行状态；\n通过新增WEB探测对象，监控门户网站www.chinaskills.cn，查看运行状态；\n在运维概况完成应用监控，应用拓扑添加并在大屏上呈现",
+  "chars": 275
+ },
+ {
+  "id": 27,
+  "source": "B模块试题.txt",
+  "path": "模块B：服务部署 › Linux项目任务清单 › 客户端OutsideCli和InsideCli工作任务",
+  "text": "（六）客户端OutsideCli和InsideCli工作任务\nOutsideCli\n作为DNS服务器域名解析测试的客户端，安装nslookup、dig命令行工具;\n作为网站访问测试的客户端，安装firefox浏览器, curl命令行测试工具;\n作为SSH远程登录测试客户端，安装ssh命令行测试工具;\n作为SAMBA测试的客户端，使用图形界面文件浏览器测试, 并安装smbclient工具;\n作为FTP测试的客户端，安装lftp命令行工具；\n作为防火墙规则效果测试客户端，安装ping命令行工具。\n截图的时候请使用上述提到的工具进行功能测试。\nInsideCli\n作为DNS服务器域名解析测试的客户端，安装nslookup、dig命令行工具;\n作为网站访问测试的客户端，安装firefox浏览器, curl命令行测试工具;\n作为SSH远程登录测试客户端，安装ssh命令行测试工具;\n作为SAMBA测试的客户端，使用图形界面文件浏览器测试, 并安装smbclient工具;\n作为FTP测试的客户端，安装lftp命令行工具；\n作为防火墙规则效果测试客户端，安装ping命令行工具。\n截图的时候请使用上述提到的工具进行功能测试。",
+  "chars": 511
+ },
+ {
+  "id": 28,
+  "source": "UOS SDN.txt",
+  "path": "",
+  "text": "📌\nUOS SDN\n 在 IspSrv 上导入 OpenDayLight 软件包；\n\n 启动 OpenDayLight 的 karaf 程序，并安装如下组件：\n\nfeature:install odl-restconf\n\nfeature:install odl-l2switch-switch-ui\n\nfeature:install odl-mdsal-apidocs\n\nfeature:install odl-dluxapps-applications\n\n 使用 Mininet 和 OpenVswitch 构建拓扑，连接 ODL 的 6653 端口如下\n\n拓扑结构\n\n 在浏览器上可以访问 ODL 管理页面查看网元拓扑结构；\n\n 通过 OVS 给 S2 下发流表，使得 H2 与 H1、H3 无法互通；\n\n H1 启动 HTTP-Server 功能，WEB 端口为 8080，H3 作为 HTTP-Client，\n\n获取 H1 的 html 网页配置文件。 1 SDN目录下 2 apt install openjdk-8-jdk mininet -y 3 vi bin/setenv 4 JAVA_HOME=\"/usr/lib/jvm/java-8-openjdk-amd64\" 5  进入 /etc/org.apache.karaf.management.cfg 6  将两个  0.0.0.0修改为  81.6.63.100 7 ./bin/karaf 8 feature:install odl-sfc-test-consumer",
+  "chars": 677
+ },
+ {
+  "id": 29,
+  "source": "UOS SDN.txt",
+  "path": "",
+  "text": "9 feature:install odl-l2switch-switch-ui10 feature:install odl-mdsal-apidocs11 feature:install odl-dluxapps-applications12 client13 http:81.6.63.100:8181/index.html14 admin #默认用户名15 admin #默认密码1617 ispsrv18 mn --controller=remote,ip=127.0.0.1,port=6653 --topo=linear,3 --switch   default,protocols=OpenFlow101920 sh ovs-ofctl add-flow s2 in_port=1,actions=drop21 h1 python -m SimpleHTTPServer 8080 & sh apt install wget -y22 h3 wget 10.0.0.1:8080测试：1.在 ODL 主机上，opendaylight-user@root>输入：feature:list | grep odl-mdsal-apidocs 获取结果（能看到一个 X 标记即可）2.在 ODL 主机上，opendaylight-user@root>输入：feature:list | grep odl-l2switch-switch-ui获取结果（能看到一个 X 标记即可）3.谷歌浏览器访问 URL 地址，并通过默认账号进入管理界面，登录界面和通过默认账号进入管理界面分别截 1 张图；",
+  "chars": 698
+ },
+ {
+  "id": 30,
+  "source": "UOS SDN.txt",
+  "path": "",
+  "text": "（能正常显示该页面即可）\n\n4.登录 ODL 管理界面，查看 topology 界面，截图拓扑示意图；\n5.在 ODL 主机上通过 mininet> sh netstat -an |grep 81.6.63.100:6653 并截图（存在 6 个\nestablished 即可）\n\n6.通过 OVS 下发流表前，在 ODL 主机上的 mininet 模式下，执行 mininet> pingall 并截图获取\n主机直接 ping 测试；（能够全通即可）\n\n7.通过 OVS 下发流表后，在 ODL 主机上的 mininet 模式下，执行 mininet> pingall 并截图获取\n主机之间的 ping 测试；（H1 只能和 H3 互通，其他都无法互通）\n\n8.mininet> h3 wget http://10.0.0.1:8080（存在 saved 关键字即可得分）",
+  "chars": 387
+ },
+ {
+  "id": 31,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "",
+  "text": "2024 年广东省职业院校技能大赛\n      网络系统管理赛项\n\n      样题 3",
+  "chars": 44
+ },
+ {
+  "id": 32,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 A-网络构建 › 基础配置",
+  "text": "一、基础配置\n1.根据附录 1 拓扑图及附录 2 地址规划表，配置设备接口信息。\n2.所有交换机和无线控制器开启 SSH 服务，用户名密码分别为 admin、Ruijie1234；\n密码为明文类型,特权密码为 Ruijie123。\n3.S7 设备配置 SNMP 功能，向主机 172.16.0.254 发送 Trap 消息版本采用 V2C，读\n写的 Community 为“Test1234”，只读的 Community 为“Public123”，开启 Trap\n消息。",
+  "chars": 235
+ },
+ {
+  "id": 33,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 A-网络构建 › 有线网络配置",
+  "text": "二、有线网络配置\n1.在全网 Trunk 链路上做 VLAN 修剪。\n2.在 S5 的 Gi0/10-Gi0/15 端口上启用端口保护。\n3.在 S5 连接 PC 机端口上开启 Portfast 和 BPDUguard 防护功能。\n4.配置 MSTP 防止二层环路；要求所有数据流经过 S4 转发。region-name 为 test；\nrevision 版本为 1；S3 作为实例中的从根， S4 作为实例中的主根；主根优先级\n为 4096，从根优先级为 8192。\n5.在 S3 和 S4 上配置 VRRP，实现主机的网关冗余，所配置的参数要求如表 1；S3、\nS4 各 VRRP 组中高优先级设置为 150，低优先级设置为 120。",
+  "chars": 319
+ },
+ {
+  "id": 34,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 A-网络构建 › 有线网络配置",
+  "text": "表 1 S3 和 S4 的 VRRP 参数表\n\n          VLAN            VRRP 备份组号（VRID）               VRRP 虚拟 IP\n         VLAN10                  10                    193.1.10.254\n         VLAN20                  20                    193.1.20.254\n         VLAN30                  30                    193.1.30.254\n         VLAN40                  40                    193.1.40.254\n   VLAN100(交换机间)                 100                   193.1.100.254\n\n6.S1 和 S2 设置为虚拟化，S1 和 S2 间的 Te0/51-52 端口作为 VSL 链路，其中 S2\n为主，S1 为备；规划 S1 和 S2 间的 Gi0/48 端口作为 BFD 双主机检测链路；主设备：\nDomain id：1,switch id:2,priority 150, description: S5760-2;备设备：Domain\nid：1,switch id:1,priority 120, description: S5760-1。",
+  "chars": 663
+ },
+ {
+  "id": 35,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 A-网络构建 › 有线网络配置",
+  "text": "7.R1、S1/S2、AC1、AC2 间运行 OSPF，进程号为 10；EG1、S3、S4 间运行 OSPF，\n进程号为 10；S5、EG2 使用静态路由。\n8.要求业务网段中不出现协议报文；所有路由协议都发布具体网段；需要发布\n\nLoopback 地址。\n9.优化 OSPF 相关配置，以尽量加快 OSPF 收敛；广州分部需要重分发默认路由到\nOSPF 中；本部出口路由器 R1 上不允许配置默认路由，但需要让本部所有设备都学\n习到指向 R1 的默认路由；重发布路由进 OSPF 中使用类型 1。\n10.R1、R2、R3 间部署 IBGP,AS 号为 100, 使用 Loopback 接口建立 Peer，建立全\n互联的 IBGP 邻居。\n11.二级运营商通告 EG1、EG2 的直连网段到 BGP 中，实现 R1 能够访问到 EG1、EG2\n的外网接口。\n12.可通过修改 OSPF 路由 COST 达到分流的目的，且其值必须为 5 或 10；广州分\n部有线 IPV4 用户与互联网互通主路径规划为：S4-EG1;主链路故障时可无缝切换\n到备用链路上。\n13.R3 服务节点在 G0/0 接口做流量监管，上行报文流量不能超过 10Mbps，\nBurst-normal 为 1M bytes, Burst-max 为 2M bytes 如果超过流量限制则将违规报\n文丢弃。",
+  "chars": 587
+ },
+ {
+  "id": 36,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 A-网络构建 › 无线网络配置",
+  "text": "三、无线网络配置\nCII 集团公司拟投入 12 万元（网络设备采购部分），项目要求重点覆盖楼层、走廊\n和办公室。平面布局如图 1 所示。\n\n                      图 1 平面布局图\n\n1.绘制 AP 点位图（包括：AP 型号、编号、信道等信息，其中信道采用 2.4G 的 1、",
+  "chars": 149
+ },
+ {
+  "id": 37,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 A-网络构建 › 无线网络配置 › 11 三个信道进行规划）。",
+  "text": "6、11 三个信道进行规划）。\n2.使用无线地勘软件，输出 AP 点位图的 2.4G 频道的信号仿真热图（仿真信号强\n度要求大于-65db）。\n3.根据表 2 无线产品价格表，制定该无线网络工程项目设备的预算表。                        表 2 无线产品价格表                             传输速率         推荐/最大            价格 产品型号          产品特征                                功率                            （2.4G/最大）     带点数              （元）   AP1         双频双流         300M/1.167G   32/256   100mw   6000   AP2         双频双流          300M/600M    32/256   100mw   11000   AP3         单频单流            150M        12/32   60mw    2500  线缆 1         10 米馈线          N/A          N/A     N/A    1600  线缆 2         15 米馈线          N/A          N/A     N/A    2400   天线       双频单流/单频单流          N/A          N/A     N/A     500",
+  "chars": 696
+ },
+ {
+  "id": 38,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 A-网络构建 › 无线网络配置 › 11 三个信道进行规划）。",
+  "text": "Switch     24 口 POE 交换机      N/A          N/A    240w    15000    AC        无线控制器           6*1000M     32/200    40w    500004.使用 EG1 作为广州分部无线用户和无线 AP 的 DHCP 服务器，使用 S5 作为吉林分部无线用户和无线 AP 的 DHCP 服务器。\n5.创建广州分部内网 SSID 为 Test-GZ_XX(XX 现场提供)，WLAN ID 为 1，AP-Group\n为 GZ，内网无线用户关联 SSID 后可自动获取地址。创建吉林分部内网 SSID 为\nTest-JL_XX(XX 现场提供)，WLAN ID 为 2，AP-Group 为 JL，内网无线用户关联 SSID\n后可自动获取地址。\n6.本部 AC2 为主用，AC1 为备用。AP 与 AC1、AC2 均建立隧道，当 AP 与 AC2 失去\n连接时能无缝切换至 AC1 并提供服务。\n7.广州分部无线用户接入无线网络时需要采用 WPA2 加密方式，加密密码为 XX(现\n场提供)。\n8.要求内网无线网络均启用本地转发模式; 对 WLAN ID 2 下的每个用户的下行平\n均速率为 800KB/s ，突发速率为 1600KB/s。\n9.设置广州分部用户最小接入信号强度为-65dBm。关闭低速率（11b/g 1M、2M、\n5M，11a 6M、9M）应用接入。",
+  "chars": 632
+ },
+ {
+  "id": 39,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 A-网络构建 › 出口网络配置",
+  "text": "四、出口网络配置\n1.EG1、EG2、R1 进行 NAT 配置实现本部与各分部的所有用户(ACL 110)均可访问互\n联网，通过 NAPT 方式将内网用户 IP 地址转换到互联网接口上。\n2.EG1 基于网站访问、邮件收发、IM 聊天、论坛发帖、搜索引擎多应用启用审计\n功能。\n3.EG1 周一到周五工作时间 09：00-17:00（命名为 work）阻断并审计 P2P 应用软\n\n件使用。禁止广州分部内网用户通过浏览器访问 http://40.1.0.9。\n4.使用 IPSec 对本部到各分部的数据流进行加密。要求使用动态隧道主模式，安\n全协议采用 esp 协议，加密算法采用 3des，认证算法采用 md5，以 IKE 方式建立\nIPsec SA。在 R1 上配置 ipsec 加密转换集名称为 myset；动态 ipsec 加密图名称\n为 dymymap；预共享密钥为明文 123456；静态的 ipsec 加密图 mymap。\n5.在 EG1 和 EG2 上配置 ACL 编号为 101；静态的 ipsec 加密图 mymap；预共享密钥\n为明文 123456。",
+  "chars": 486
+ },
+ {
+  "id": 40,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 A-网络构建 › SDN网络配置",
+  "text": "五、SDN网络配置\n1.SDN 控制器登录地址：：192.168.1.2/24，默认用户密码为 admin/test@123。\n2.使用 S6/S3 构建 SDN 网络，S6 连接 SDN 控制器的 6653 端口。\n3.通过 SDN 控制器手工给 S6 下发流表项使其 S6 下终端可与业务网段互联互通。",
+  "chars": 153
+ },
+ {
+  "id": 41,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 A-网络构建 › 网络运维配置",
+  "text": "六、网络运维配置\n1.完成整网连通后，进入网络监控运维阶段，运维软件已安装在 PC 的虚拟机中，\n通过运维平台监控拓扑中所有网络设备（AP 除外）。考试现场提供运维平台登陆\n的用户名密码信息。\n2.通过运维平台将被监控设备纳入监控范围；通过拓扑配置功能，将网络拓扑配置\n到平台中。\n3.联通运营商提供的三条互联网链路作为重点监测链路，三条链路名称分别为\nR1-R2、R1-R3、R1-S7，状态信息中能够监控到各项链路指标信息。\n4.自定义监控大屏（名称：Chinaskills_network），将网络拓扑、CPU 使用率、内存\n使用率、链路运行状态、采集器 Server 状态、最新告警信息、告警级别统计各项\n指标实时显示在大屏中。",
+  "chars": 318
+ },
+ {
+  "id": 42,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "附录2：地址规划表",
+  "text": "附录2：地址规划表设备       接口或 VLAN     VLAN 名称        二层或三层规划               说明        VLAN20       Xiaoshou     192.1.20.254/24    销售部        VLAN30       Caiwu        192.1.30.254/24    财务部        Vlan100      Manage       192.1.100.254/24   管理与互联 VLAN        Gi1/0/1                   10.1.0.9/30        AG1        Gi2/0/1                   10.1.0.9/30        AG1        Gi1/0/2      Trunk                           AG2S1/S2        Gi2/0/2      Trunk                           AG2        Gi1/0/3      Trunk                           AG3        Gi2/0/3      Trunk                           AG3        Gi1/0/4      Trunk                           AG4        Gi2/0/4      Trunk                           AG4",
+  "chars": 698
+ },
+ {
+  "id": 43,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "附录2：地址规划表",
+  "text": "LoopBack 0                11.1.0.31/32        VLAN20       Xiaoshou     Gi0/13 至 Gi0/16    销售部        VLAN30       Caiwu        Gi0/17 至 Gi0/20    财务部 S7     Vlan100      Manage       192.1.100.1/24     管理与互联 VLAN        Gi0/1        Trunk                           AG1        Gi0/2        Trunk                           AG1        LoopBack 0                11.1.0.21/32AC1        Vlan100      Manage       192.1.100.2/24     管理与互联 VLAN        LoopBack 0                11.1.0.22/32AC2        Vlan100      Manage       192.1.100.3/24     管理与互联 VLAN        Gi0/23       SDN-Manage   192.168.1.3        SDN 管理网段        VLAN20       Xiaoshou     Gi0/5 至 Gi0/8      销售部 S6",
+  "chars": 669
+ },
+ {
+  "id": 44,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "附录2：地址规划表",
+  "text": "VLAN30       Caiwu        Gi0/9 至 Gi0/12     财务部        VLAN40       Shichang     Gi0/13 至 Gi0/16    市场部        VLAN10       AP           193.1.10.252/24    AP        VLAN20       Xiaoshou     193.1.20.252/24    销售部无线用户        VLAN30       Caiwu        193.1.30.252/24    财务部        VLAN40       Shichang     193.1.40.252/24    市场部 S3     VLAN100      Manage       193.1.100.252/24   设备管理 VLAN        Gi0/13       Trunk                           AG1 成员口        Gi0/14       Trunk                           AG1 成员口        Gi0/24                    10.1.0.1/30        LoopBack 0                11.1.0.33/32        VLAN10       AP           193.1.10.253/24    AP",
+  "chars": 659
+ },
+ {
+  "id": 45,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "附录2：地址规划表",
+  "text": "VLAN20       Xiaoshou     193.1.20.253/24    销售部无线用户 S4        VLAN30       Caiwu        193.1.30.253/24    财务部        VLAN40       Shichang     193.1.40.253/24    市场部设备     接口或 VLAN     VLAN 名称      二层或三层规划                    说明      VLAN100      Manage     193.1.100.253/24      设备管理 VLAN      Gi0/13       Trunk                            AG1 成员口      Gi0/14       Trunk                            AG1 成员口      Gi0/24                  10.1.0.5/30      LoopBack 0              11.1.0.34/32      Gi0/1                   10.1.0.2/30      Gi0/2                   10.1.0.6/30EG1      Gi0/3                   10.1.0.17/30      LoopBack 0              11.1.0.11/32",
+  "chars": 660
+ },
+ {
+  "id": 46,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "附录2：地址规划表",
+  "text": "194.1.10.254/24       AP      VLAN10       AP                              Gi0/1-4               Native vlanS5    VLAN20       Wireless   194.1.20.254/24       无线用户      Gi0/24                  10.1.0.13/30      LoopBack 0              11.1.0.35/32      Gi0/1                   10.1.0.14/30EG2   Gi0/3                   10.1.0.21/30      LoopBack 0              11.1.0.12/32      Gi1/0                   12.1.0.1/24（VLAN20）      Gi1/1                   13.1.0.1/24（VLAN30）R1      VLAN10                  10.1.0.10/30          Gi1/2、Gi1/3      LoopBack 0              11.1.0.1/32      Fa1/0                   12.1.0.2/24（VLAN20）",
+  "chars": 627
+ },
+ {
+  "id": 47,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "附录2：地址规划表",
+  "text": "Fa1/1                   14.1.0.2/24(VLAN40)R2      Gi0/0                   10.1.0.18/30      LoopBack 0              11.1.0.2/32      Fa1/1                   14.1.0.3/24(VLAN40)      Fa1/0                   13.1.0.3/24（VLAN30）R3      Gi0/0                   10.1.0.22/30      LoopBack 0              11.1.0.3/32",
+  "chars": 311
+ },
+ {
+  "id": 48,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 B-服务部署 › Windows初始化环境 › 默认账号及默认密码",
+  "text": "（一）默认账号及默认密码\n    Username: Administrator\n    Password: ChinaSkills23\n    Username: demo\n    Password: ChinaSkills23\n    注：若非特别指定，所有账号的密码均为 ChinaSkills23",
+  "chars": 152
+ },
+ {
+  "id": 49,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 B-服务部署 › Windows项目任务描述",
+  "text": "二、Windows项目任务描述\n    你作为一名网络技术工程师，被指派去构建 ChinaSkills.cn 的网络服务。你必\n 须在规定的时间内完成要求的任务，并进行充分的测试，确保设备和应用正常运\n 行。",
+  "chars": 104
+ },
+ {
+  "id": 50,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "Windows项目任务描述 › 基本配置 › 服务器和客户端信息，各虚拟机已预装系统。",
+  "text": "1、服务器和客户端信息，各虚拟机已预装系统。   Device      Hostname            FQDN                    IPAddress  DCserver      DCserver   DCserver.ChinaSkills.cn       172.16.100.221 SDCserver     SDCserver   SDCserver.ChinaSkills.cn      172.16.100.222  Server01      Server01   Server01.ChinaSkills.cn       192.168.10.251  Server02      Server02   Server02.ChinaSkills.cn       192.168.10.252  Server03      Server03   Server03.ChinaSkills.cn       192.168.10.253                                                         172.16.100.254 GWserver      GWserver    GWserver.ChinaSkills.cn       192.168.10.254                                                         10.10.100.254",
+  "chars": 657
+ },
+ {
+  "id": 51,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "Windows项目任务描述 › 基本配置 › 服务器和客户端信息，各虚拟机已预装系统。",
+  "text": "Client        Client                                   10.10.100.x",
+  "chars": 66
+ },
+ {
+  "id": 52,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "Windows项目任务描述 › 基本配置 › 网络信息",
+  "text": "2、网络信息\n\n             Network                        CIDR\n\n             办公区域                       10.10.100.0/24\n\n           服务区                172.16.100.128/25\n\n          应用区域                192.168.10.240/28",
+  "chars": 210
+ },
+ {
+  "id": 53,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 B-服务部署 › Windows项目任务描述 › 拓扑图",
+  "text": "（二）拓扑图\n     构建 ChinaSkills.cn 的网络服务环境如下图所示。",
+  "chars": 43
+ },
+ {
+  "id": 54,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 B-服务部署 › Windows项目任务清单 › DCserver 配置任务",
+  "text": "（一） DCserver 配置任务\n\n     注意：若题目中未明确规定，请使用默认配置。\n     虚拟服务器上，虚拟机名称为“DCserver”的为“DCserver”服务器系统，服\n  务器已安装好基本的 Windows Server 操作系统环境，默认用户名为“administrator”，\n  默认密码：ChinaSkills23。\n     注：本题目中没特别说明的密码皆为：ChinaSkills23。",
+  "chars": 209
+ },
+ {
+  "id": 55,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "DCserver 配置任务 › DCserver 系统基础环境配置 › 请根据附件说明或提供的基础信息，配置服务器的主机名\\IP 地…",
+  "text": "（1） 请根据附件说明或提供的基础信息，配置服务器的主机名\\IP 地址，创建要求的用户名及密码；",
+  "chars": 48
+ },
+ {
+  "id": 56,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "DCserver 配置任务 › DCserver 系统基础环境配置 › 配置Windows 防火墙，仅允许配置的服务通过防火墙；禁止…",
+  "text": "（2） 配置Windows 防火墙，仅允许配置的服务通过防火墙；禁止ICMP回显请求。",
+  "chars": 43
+ },
+ {
+  "id": 57,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "Windows项目任务清单 › DCserver 配置任务 › ACTIVE DIRECTORY SERVICE主域控活动目…",
+  "text": "2．ACTIVE DIRECTORY SERVICE主域控活动目录配置工作任务",
+  "chars": 39
+ },
+ {
+  "id": 58,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "DCserver 配置任务 › ACTIVE DIRECTORY SERVICE主域控活动目… › 在 DCserver 上配置以下服务与设置",
+  "text": "（1）在 DCserver 上配置以下服务与设置\n    为ChinaSkills.cn安装和配置活动目录域服务；\n    只有域管理员和IT部门员工可以登陆服务器。",
+  "chars": 85
+ },
+ {
+  "id": 59,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "DCserver 配置任务 › ACTIVE DIRECTORY SERVICE主域控活动目… › 创建以下全局 AD 组与用户",
+  "text": "（2）创建以下全局 AD 组与用户\n    Sales(Sales001-100)、IT（IT01-05）、Finance（F01-10）、Management\n     （Manage01-05）；\n    创建ChinaSkills23为GPO管理员；加入到企业管理、域控管理员组；\n    为所有域用户设置漫游文件（除Management外），漫游文件放于\n     \\\\ChinaSkills.cn\\ChinaSkills23\\Roaming Profile\\目录中；\n    开启本地及域控用户登录操作日志审计记录；\n    开启远程桌面服务及对应端口，让服务器可以被纳管到云堡垒机；仅允许\n     本地管理员和域管理员登录；\n    配置域控组策略及域控配置信息备份；每天自动备份到本地的D盘根目录；\n     并同步复制到DFS目录下:\\DFSsharedir\\IT\\backup目录。",
+  "chars": 407
+ },
+ {
+  "id": 60,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "DCserver 配置任务 › DNS SERVICE配置工作任务 › 创建必要的 ChinaSkills.cn 正向区域，添加必要…",
+  "text": "（2） 创建必要的 ChinaSkills.cn 正向区域，添加必要的域名解析记录；",
+  "chars": 42
+ },
+ {
+  "id": 61,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "DCserver 配置任务 › DNS SERVICE配置工作任务 › 配置 TXT 记录，配置主时间控制服务记录；配置域名反向 P…",
+  "text": "（3） 配置 TXT 记录，配置主时间控制服务记录；配置域名反向 PTR；",
+  "chars": 37
+ },
+ {
+  "id": 62,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "DCserver 配置任务 › DHCP SERVICE 配置工作任务 › 创建一个名为“ChinaSkills.cn”的 DHCP 作…",
+  "text": "（2） 创建一个名为“ChinaSkills.cn”的 DHCP 作用域；",
+  "chars": 37
+ },
+ {
+  "id": 63,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "DCserver 配置任务 › DHCP SERVICE 配置工作任务 › 保留地址 172.16.100.129-139，起始地址 1…",
+  "text": "（3） 保留地址 172.16.100.129-139，起始地址 172.16.100.140-254；绑定 SDCserver\n     的 IP 地址为 172.16.100.222/25；",
+  "chars": 97
+ },
+ {
+  "id": 64,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "DCserver 配置任务 › DHCP SERVICE 配置工作任务 › DNS 服务器：172.16.100.221；8.8.8.8…",
+  "text": "（5） DNS 服务器：172.16.100.221；8.8.8.8；",
+  "chars": 35
+ },
+ {
+  "id": 65,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "DCserver 配置任务 › 为 ChinaSkills.cn 域配置安全策略 › 限制Management（Manage01-05）只能从Cl…",
+  "text": "（1） 限制Management（Manage01-05）只能从Client登录；",
+  "chars": 41
+ },
+ {
+  "id": 66,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "DCserver 配置任务 › 为 ChinaSkills.cn 域配置安全策略 › 限制Finance（F01-10），不能关闭计算机和重启计算…",
+  "text": "（2） 限制Finance（F01-10），不能关闭计算机和重启计算机；",
+  "chars": 36
+ },
+ {
+  "id": 67,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "DCserver 配置任务 › 为 ChinaSkills.cn 域配置安全策略 › 所有的域计算机和域用户都能自动注册证书，证书颁发机构已经颁发…",
+  "text": "（3） 所有的域计算机和域用户都能自动注册证书，证书颁发机构已经颁发过一次，\n     就不再重复颁发，除非证书文件丢失或者失效；",
+  "chars": 65
+ },
+ {
+  "id": 68,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "DCserver 配置任务 › 为 ChinaSkills.cn 域配置安全策略 › 为普通用户配置密码策略，该策略要求密码为长度最小12位数的复…",
+  "text": "（4） 为普通用户配置密码策略，该策略要求密码为长度最小12位数的复杂性密码；",
+  "chars": 39
+ },
+ {
+  "id": 69,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "DCserver 配置任务 › 为 ChinaSkills.cn 域配置安全策略 › 对于Finance（F01-10），有一个例外，无需密码即可…",
+  "text": "（5） 对于Finance（F01-10），有一个例外，无需密码即可登录客户端；",
+  "chars": 40
+ },
+ {
+  "id": 70,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "DCserver 配置任务 › 为 ChinaSkills.cn 域配置安全策略 › 对IT（IT01-05）用户启用桌面环境副本，移除回收站图表…",
+  "text": "（6） 对IT（IT01-05）用户启用桌面环境副本，移除回收站图表，统一添加IE浏览器快捷方式在桌面；",
+  "chars": 52
+ },
+ {
+  "id": 71,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "DCserver 配置任务 › 为 ChinaSkills.cn 域配置安全策略 › 禁止Sales(Sales001-010)使用注册表编辑工具…",
+  "text": "（7） 禁止Sales(Sales001-010)使用注册表编辑工具、PowerShell以及Cmd。\n\n  配置 CA 服务器",
+  "chars": 64
+ },
+ {
+  "id": 72,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "DCserver 配置任务 › 为 ChinaSkills.cn 域配置安全策略 › 配置证书服务器，提供CA自动申请证书；实现证书颁发机构及机构…",
+  "text": "（1） 配置证书服务器，提供CA自动申请证书；实现证书颁发机构及机构WEB注册服务；",
+  "chars": 42
+ },
+ {
+  "id": 73,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "DCserver 配置任务 › 为 ChinaSkills.cn 域配置安全策略 › 配置为企业CA域成员；CA类型：根CA中心；加密类型SHA2…",
+  "text": "（2） 配置为企业CA域成员；CA类型：根CA中心；加密类型SHA256位，密\n           钥长度2248位；CA共用名称:Chinaskills.cn；可分辨后缀：DC=Chinaskills，\n           DC=local；有效期为1年；",
+  "chars": 131
+ },
+ {
+  "id": 74,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "DCserver 配置任务 › 为 ChinaSkills.cn 域配置安全策略 › 证书数据存储路径：H：\\DFSsharedir\\CA。",
+  "text": "（3） 证书数据存储路径：H：\\DFSsharedir\\CA。",
+  "chars": 31
+ },
+ {
+  "id": 75,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 B-服务部署 › Windows项目任务清单 › SDCserver 配置任务",
+  "text": "（二）SDCserver 配置任务\n\n     注意：若题目中未明确规定，请使用默认配置。\n     虚拟服务器上，虚拟机名称为“SDCserver”的为“SDCserver”服务器系统，\n  服务器上请安装基本的 Windows Server 操作系统环境，默认用户名为\n  “administrator”，默认密码：ChinaSkills23。\n     注：本题目中没特别说明的密码皆为：ChinaSkills23。",
+  "chars": 211
+ },
+ {
+  "id": 76,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "SDCserver 配置任务 › SDCserver 系统基础环境配置 › 请根据附件说明或提供的基础信息，配置服务器的主机名，IP地址…",
+  "text": "（1） 请根据附件说明或提供的基础信息，配置服务器的主机名，IP地址，创建要求的用户名及密码；",
+  "chars": 47
+ },
+ {
+  "id": 77,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "SDCserver 配置任务 › SDCserver 系统基础环境配置 › 配置Windows防火墙，仅允许配置的服务通过防火墙；禁止I…",
+  "text": "（2） 配置Windows防火墙，仅允许配置的服务通过防火墙；禁止ICMP回显请求；",
+  "chars": 42
+ },
+ {
+  "id": 78,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "SDCserver 配置任务 › SDCserver 系统基础环境配置 › 安装Zabbix-Agent到Zabbix，用Zabbix检…",
+  "text": "（3） 安装Zabbix-Agent到Zabbix，用Zabbix检测域控服务器运行状态；执行文件\n       在操作主机的D：/tools文件夹内；",
+  "chars": 76
+ },
+ {
+  "id": 79,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "Windows项目任务清单 › SDCserver 配置任务 › ACTIVE DIRECTORY SERVICE 辅助域控活…",
+  "text": "2．ACTIVE DIRECTORY SERVICE 辅助域控活动目录配置工作任务",
+  "chars": 41
+ },
+ {
+  "id": 80,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "SDCserver 配置任务 › ACTIVE DIRECTORY SERVICE 辅助域控活… › 为安装和配置活动目录域服务：将SDCserver加入到Chi…",
+  "text": "（1） 为安装和配置活动目录域服务：将SDCserver加入到Chinaskills.cn的域中，\n       只有域管理员和IT部门员工，可以登陆服务器；将服务器配置为辅助域控。\n       DCserver主域控服务器；当DCserver离线时，SDCserver成为主服务器；",
+  "chars": 143
+ },
+ {
+  "id": 81,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "SDCserver 配置任务 › ACTIVE DIRECTORY SERVICE 辅助域控活… › 开启远程桌面服务及对应端口，让服务器可以被纳管到云堡垒机；仅…",
+  "text": "（3） 开启远程桌面服务及对应端口，让服务器可以被纳管到云堡垒机；仅允许本地管理员和域管理员登录；",
+  "chars": 49
+ },
+ {
+  "id": 82,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "SDCserver 配置任务 › ACTIVE DIRECTORY SERVICE 辅助域控活… › 配置域控组策略及域控配置信息备份；自动备份到本地的D盘根目录…",
+  "text": "（4） 配置域控组策略及域控配置信息备份；自动备份到本地的D盘根目录；并同\n       步复制到DFS目录下:\\DFSsharedir\\IT\\backup目录。\n3.GPO:组策略与系统配\n       置",
+  "chars": 104
+ },
+ {
+  "id": 83,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "SDCserver 配置任务 › ACTIVE DIRECTORY SERVICE 辅助域控活… › 设定所有职务为managers的用户为本地管理员，除了域控制…",
+  "text": "（6） 设定所有职务为managers的用户为本地管理员，除了域控制器；",
+  "chars": 36
+ },
+ {
+  "id": 84,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "SDCserver 配置任务 › 服务器磁盘配置工作任务 › 安装及配置 RAID",
+  "text": "（1）安装及配置 RAID\n      配置系统软RAID；添加两块10G磁盘；\n      在服务器上为创建一个RAID-1阵列；\n      格式化该磁盘挂载为I盘，名称为：RAID1；",
+  "chars": 98
+ },
+ {
+  "id": 85,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 B-服务部署 › Windows项目任务清单 › Server01 配置任务",
+  "text": "（三）Server01 配置任务\n\n     注意：若题目中未明确规定，请使用默认配置。\n     虚拟服务器上，虚拟机名称为“Server01”的为“Server01”服务器系统，服\n  务器已安装好基本的 Windows Server 操作系统环境，默认用户名为“administrator”，\n  默认密码：ChinaSkills23。\n     注：本题目中没特别说明的密码皆为：ChinaSkills23。",
+  "chars": 208
+ },
+ {
+  "id": 86,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "Server01 配置任务 › Server01 系统基础环境配置 › 请根据附件说明或提供的基础信息，配置服务器的主机名，IP地址…",
+  "text": "（1） 请根据附件说明或提供的基础信息，配置服务器的主机名，IP地址，创建要求的用户名及密码；",
+  "chars": 47
+ },
+ {
+  "id": 87,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "Server01 配置任务 › Server01 系统基础环境配置 › 配置Windows防火墙，仅允许配置的服务通过防火墙；禁止I…",
+  "text": "（2） 配置Windows防火墙，仅允许配置的服务通过防火墙；禁止ICMP回显请求；",
+  "chars": 42
+ },
+ {
+  "id": 88,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "Server01 配置任务 › Server01 系统基础环境配置 › 将Server01加入到Chinaskills.cn的域中，…",
+  "text": "（3） 将Server01加入到Chinaskills.cn的域中，只有域管理员和IT部门员工及本地管理员可以登陆服务器。\n2. WSUS更新服务\n        安装 WSUS 更新服务，更新补丁目录设置为“c:\\wsusbackup”。\n        创建更新组名称为“CHINASKILLS-WSUS”。\n        每天凌晨 03:00 下发自动更新。\n        更新服务器地址为“http://wsus.chinaskills.cn:8530”。\n3. FTP 服务配置\n        安装 FTP 服务，新建一个 FTP 站点，并建立用户 soft1、soft2，密码均为\n         ftp123；\n            FTP 站点主目录为 D:\\ftproot，通过启用隔离用户功能，使用用户名目录\n         的方式实现用户 soft1 与 soft2 和匿名方式登录 FTP 站点时，匿名方式只能\n         浏览到“Public”子目录中的内容，若用个人账号登录 FTP 站点，则只能访\n         问与用户名同名的自己的子文件夹；\n            ftp 站点使用预共享密钥加密通信通道，否则将不能访问\n        设置 FTP 最大客户端连接数为 100。",
+  "chars": 576
+ },
+ {
+  "id": 89,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 B-服务部署 › Windows项目任务清单 › Server02 配置任务",
+  "text": "（四）Server02 配置任务\n\n     注意：若题目中未明确规定，请使用默认配置。\n     虚拟服务器上，虚拟机名称为“Server02”的为“Server02”服务器系统，服\n  务器需要安装，并完成配置基本的 Windows Server 操作系统环境，默认用户名为\n  “administrator”，默认密码：ChinaSkills23。\n\n     注：本题目中没特别说明的密码皆为：ChinaSkills231．Server02 系统基础环\n  境配置",
+  "chars": 236
+ },
+ {
+  "id": 90,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "Windows项目任务清单 › Server02 配置任务 › 请根据附件说明或提供的基础信息，配置服务器的主机名，IP地址…",
+  "text": "（1） 请根据附件说明或提供的基础信息，配置服务器的主机名，IP地址，创建要求的用户名及密码；",
+  "chars": 47
+ },
+ {
+  "id": 91,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "Windows项目任务清单 › Server02 配置任务 › 配置Windows防火墙，仅允许配置的服务通过防火墙；禁止I…",
+  "text": "（2） 配置Windows防火墙，仅允许配置的服务通过防火墙；禁止ICMP回显请求；",
+  "chars": 42
+ },
+ {
+  "id": 92,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "Windows项目任务清单 › Server02 配置任务 › 将Server02加入到Chinaskills.cn的域中，…",
+  "text": "（3） 将Server02加入到Chinaskills.cn的域中，只有域管理员和IT部门员工及本地管理员可以登陆服务器。",
+  "chars": 61
+ },
+ {
+  "id": 93,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "Windows项目任务清单 › Server02 配置任务 › DISK配置服务器软RAID工作任务（1） 安装及配置RAI…",
+  "text": "2．DISK配置服务器软RAID工作任务（1） 安装及配置RAID；",
+  "chars": 34
+ },
+ {
+  "id": 94,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "Server02 配置任务 › DISK配置服务器软RAID工作任务（1） 安装及配置RAI… › 格式化该磁盘挂载为I盘，名称为：RAID1；",
+  "text": "（4） 格式化该磁盘挂载为I盘，名称为：RAID1；\n3. rd服务配置",
+  "chars": 36
+ },
+ {
+  "id": 95,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "Server02 配置任务 › DISK配置服务器软RAID工作任务（1） 安装及配置RAI… › 在InsideCli客户端登录的用户可以直接在开始菜单中找到…",
+  "text": "（2） 在InsideCli客户端登录的用户可以直接在开始菜单中找到RemoteApp程序。",
+  "chars": 46
+ },
+ {
+  "id": 96,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 B-服务部署 › Windows项目任务清单 › Server03 配置任务",
+  "text": "（五）Server03 配置任务\n     注意：若题目中未明确规定，请使用默认配置。\n     虚拟服务器上，虚拟机名称为“Server03”的为“Server03”服务器系统，服\n  务器需要安装，并完成配置基本的 Windows Server 操作系统环境，默认用户名为\n  “administrator”，默认密码：ChinaSkills23。\n     注：本题目中没特别说明的密码皆为：ChinaSkills23。",
+  "chars": 213
+ },
+ {
+  "id": 97,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "Server03 配置任务 › Server03 系统基础环境配置 › 请根据附件说明或提供的基础信息，配置服务器的主机名，IP地址…",
+  "text": "（1） 请根据附件说明或提供的基础信息，配置服务器的主机名，IP地址，创建要求的用户名及密码；",
+  "chars": 47
+ },
+ {
+  "id": 98,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "Server03 配置任务 › Server03 系统基础环境配置 › 配置Windows防火墙，仅允许配置的服务通过防火墙；禁止I…",
+  "text": "（2） 配置Windows防火墙，仅允许配置的服务通过防火墙；禁止ICMP回显请求；",
+  "chars": 42
+ },
+ {
+  "id": 99,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "Server03 配置任务 › Server03 系统基础环境配置 › 安装Zabbix-Agent到Zabbix，用Zabbix检…",
+  "text": "（3） 安装Zabbix-Agent到Zabbix，用Zabbix检测域控服务器运行状态；执行文件\n         在操作主机的D：/tools文件夹内；",
+  "chars": 78
+ },
+ {
+  "id": 100,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "Server03 配置任务 › Server03 系统基础环境配置 › 将Server03加入到Chinaskills.cn的域中，…",
+  "text": "（4） 将Server03加入到Chinaskills.cn的域中，只有域管理员和IT部门员工及本地管理员可以登陆服务器。\n2. DFS 服务配置\n        在 Server03 上安装及配置 DFS 服务。\n        目录设置在 F：\\DFSsharedir。\n        在 F：\\DFSsharedir 文件夹内新建所有部门的文件夹。\n        所有部门的用户之可以访问部门内的文件，不可以跨部门访问别的部门文\n         件夹内容。\n        Management 用户组用户可以访问全局的文件夹。",
+  "chars": 275
+ },
+ {
+  "id": 101,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 B-服务部署 › Windows项目任务清单 › GWserver 配置任务",
+  "text": "（六）GWserver 配置任务\n\n     注意：若题目中未明确规定，请使用默认配置。\n\n     虚拟服务器上，虚拟机名称为“GWserver”的为“GWserver”服务器系统，\n  服务器已安装好基本的 Windows Server 操作系统环境，默认用户名为\n  “administrator”，默认密码：ChinaSkills23。\n     注：本题目中没特别说明的密码皆为：ChinaSkills23。",
+  "chars": 209
+ },
+ {
+  "id": 102,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "GWserver 配置任务 › GWserver 系统基础环境配置 › 请根据附件说明或提供的基础信息，配置服务器的主机名，IP地址…",
+  "text": "（1） 请根据附件说明或提供的基础信息，配置服务器的主机名，IP地址，创建要求的用户名及密码；",
+  "chars": 47
+ },
+ {
+  "id": 103,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "GWserver 配置任务 › GWserver 系统基础环境配置 › 配置Windows防火墙，仅允许配置的服务通过防火墙；禁止I…",
+  "text": "（2） 配置Windows防火墙，仅允许配置的服务通过防火墙；禁止ICMP回显请求。",
+  "chars": 42
+ },
+ {
+  "id": 104,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "GWserver 配置任务 › 安装及配置VPN服务 › 仅允许Layer 2 Tunneling Protocol连…",
+  "text": "（1） 仅允许Layer 2 Tunneling Protocol连接；",
+  "chars": 36
+ },
+ {
+  "id": 105,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "GWserver 配置任务 › 安装及配置VPN服务 › 为保障认证的安全性，采用证书作为Layer 2 Tunnel…",
+  "text": "（2） 为保障认证的安全性，采用证书作为Layer 2 Tunneling Protocol认证手段；",
+  "chars": 51
+ },
+ {
+  "id": 106,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "GWserver 配置任务 › 安装及配置VPN服务 › 客户端连接成功后获得的内部地址范围为：",
+  "text": "（3） 客户端连接成功后获得的内部地址范围为：\n          192.168.10.241-192.168.10.248；",
+  "chars": 64
+ },
+ {
+  "id": 107,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 B-服务部署 › Windows项目任务清单 › Client 配置任务",
+  "text": "（七）Client 配置任务\n\n     注意：若题目中未明确规定，请使用默认配置。\n     虚拟服务器上，虚拟机名称为“client”的为“client”服务器系统，服务器已\n  安装好基本的 Windows Server 操作系统环境，默认用户名为“administrator”，默\n  认密码：ChinaSkills23。",
+  "chars": 165
+ },
+ {
+  "id": 108,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "Client 配置任务 › 对等网客户端配置 › 设置电源配置，以便客户端在通电的情况下，永不进入睡眠；",
+  "text": "（2） 设置电源配置，以便客户端在通电的情况下，永不进入睡眠；",
+  "chars": 31
+ },
+ {
+  "id": 109,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "Client 配置任务 › 对等网客户端配置 › 创建一个名为SD-VPN的拨号适配器连接，用于建立VPN连接…",
+  "text": "（3） 创建一个名为SD-VPN的拨号适配器连接，用于建立VPN连接。\n     该客户端用于测试 VPN，以及需要的完成相关功能。",
+  "chars": 66
+ },
+ {
+  "id": 110,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 B-服务部署 › Windows项目任务清单 › IOMSrv 配置任务",
+  "text": "（八）IOMSrv 配置任务\n           图形界面登陆 IOMSrv 运维平台，登陆地址 http://172.16.100.250；\n           通过 Windows 代理模板，添加 DC1、DC2 操作系统监控对象，查看运行\n            状态。\n           通过中间件 IIS 模板，添加 IIS 监控对象，查看运行状态。\n           通过新增 WEB 探测对象，监控门户网站 http://www.Chinaskills.cn，查看\n            运行状态。\n           基于 Server01 上的门户网站业务，完成业务拓扑绘制，并在业务大屏上\n            呈现。",
+  "chars": 333
+ },
+ {
+  "id": 111,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 B-服务部署 › Linux初始化环境 › 默认账号及默认密码Username: root",
+  "text": "（一）默认账号及默认密码Username: root\n    Password: ChinaSkill23!\n    Username: skills\n    Password: ChinaSkill23!\n    注：若非特别指定，所有账号的密码均为 ChinaSkill23!",
+  "chars": 140
+ },
+ {
+  "id": 112,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 B-服务部署 › Linux初始化环境 › 操作系统配置所处区域：CST + 8",
+  "text": "（二）操作系统配置所处区域：CST + 8\n    系统环境语言：English US (UTF-8)\n    键盘：English US\n    注意：当任务是配置 TLS，请把根证书或者自签名证书添加到受信任区。\n    控制台登陆后不管是网络登录还是本地登录，都按下方欢迎信息内容显示\n            *********************************\n                   ChinaSkills 2023–CSK\n                      Module C Linux\n\n                               >>hostname<<\n                             >>Linux Version<<\n                                >> TIME <<\n                    *********************************",
+  "chars": 457
+ },
+ {
+  "id": 113,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 B-服务部署 › 项目任务描述",
+  "text": "五、项目任务描述\n    某公司要为员工提供便捷、安全稳定内外网络服务，你作为一个公司网络系\n  统管理员，负责公司网络系统管理，请根据网络拓扑、基本配置信息和服务需求\n  完成网络服务安装与测试，网络拓扑图和基本配置信息如下：",
+  "chars": 114
+ },
+ {
+  "id": 114,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 B-服务部署 › 项目任务描述 › 基本配置",
+  "text": "（二）基本配置\n 服务器和客户端基本配置如下表，各虚拟机已预装系统。 Device     Hostname   System          FQDN             IP Address      Service                                                                        RAID5                                                                         NFS                                                                         DNS Server01   Server01   Centos   Server01.sdskills.com 172.16.100.201 Webserver                                                                         SSH                                                                        DBMS                                                                         SDN",
+  "chars": 648
+ },
+ {
+  "id": 115,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 B-服务部署 › 项目任务描述 › 基本配置",
+  "text": "Ftp Server02   Server02   Centos   Server02.sdskills.com 172.16.100.202     Mail                                                                         SSH                                                                         Ntp, Server03   Server03    UOS      Server03.skills.com   192.168.10.3                                                                         SSH                                                                         DNS                                                                       Webserver Server04   Server04    UOS      Server04.skills.com   192.168.10.X",
+  "chars": 599
+ },
+ {
+  "id": 116,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 B-服务部署 › 项目任务描述 › 基本配置",
+  "text": "SSH                                                                        LDAP                                                                              proxy                                                            172.16.100.254   firewall                                      Rserver.skills.com  Rserver     Rserver       Centos                           192.168.10.2     dhcp                                     Rserver.sdskills.com                                                            10.10.100.254     SSH                                                                               CA",
+  "chars": 604
+ },
+ {
+  "id": 117,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 B-服务部署 › 项目任务描述 › 基本配置",
+  "text": "Client      Client       Centos                           10.10.100.x      none      网络                 Network                             CIDR                  office                        10.10.100.0/24                  service                     172.16.100.128/25                 internet                       192.168.10.0/28",
+  "chars": 332
+ },
+ {
+  "id": 118,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 B-服务部署 › Linux项目任务清单",
+  "text": "六、Linux项目任务清单\n  任务设备：Client,Rserver,servr01,server02,server03,server04。\n  注意：若题目中未明确规定，请使用默认配置。",
+  "chars": 95
+ },
+ {
+  "id": 119,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 B-服务部署 › Linux项目任务清单 › CLIENT TASK",
+  "text": "（一）CLIENT TASK\n\n  1.Client 相关任务，具体要求如下：\n     •      作为 DNS 服务器域名解析测试的客户端，安装 nslookup、dig 命令行工具；\n     •      作为网站访问测试的客户端，安装 firefox 浏览器，curl 命令行测试工具；\n     •      作为 SSH 远程登录测试客户端，安装 ssh 命令行测试工具；\n     •      作为 SAMBA 测试的客户端，使用图形界面文件浏览器测试，并安装\n            smbclient 工具；\n     •      作为 FTP 测试的客户端，安装 lftp 命令行工具；\n     •      作为防火墙规则效果测试客户端，安装 ping 命令行工具。\n     •      截图的时候请使用上述提到的工具进行功能测试。",
+  "chars": 384
+ },
+ {
+  "id": 120,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 B-服务部署 › Linux项目任务清单 › RSERVER TASK",
+  "text": "（二）RSERVER TASK\n\n  1.NETWORK\n      • 请根据基本配置信息配置服务器的主机名，网卡IP地址配置、域名等。\n2.squid\n      • 安装 squid 服务，开启路由转发，为当前实验环境提供路由功能；\n3. DNS\n     •      为chinaskills.cn域提供域名解析。\n\n     •   为www.chinaskills.cn、download.chinaskills.cn和mail.chinaskills.cn提供解析。\n     •   启用内外网解析功能，当内网客户端请求解析的时候，解析到对应的内部\n         服务器地址，当外部客户端请求解析的时候，请把解析结果解析到提供服\n         务的公有地址。\n4.DHCP\n     •   为客户端分配 IP 范围是 10.10.100.1-10.10.100.50；\n     •   DNS：按照实际需求配置 DNS 服务器地址选项；\n      • GATEWAY：按照实际需求配置网关地址选项。\n5.SSH\n     •   安装SSH\n     •   仅允许client客户端进行ssh访问，其余所有主机的请求都应该拒绝；\n     •   配置client只能在Chinaskill23用户环境下可以免秘钥登录，端口号为2022，\n         并且拥有root控制权限。\n6.CA\n     •   CA根证书路径/CA/cacert.pem；",
+  "chars": 646
+ },
+ {
+  "id": 121,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 B-服务部署 › Linux项目任务清单 › RSERVER TASK",
+  "text": "•   签发数字证书，颁发者信息：\n            国家 = CN\n            单位 = Inc\n            组织机构 = www.skills.com\n            公用名 = Skill Global Root CA\n      • 创建用户组ldsgp，将zsuser、lsusr、wuusr添加到组内。\n7. ShellScript\n     •   编写添加用户的脚本，存储在/shells/userAdd.sh目录；\n     •   当有新员工入职时，管理员运行脚本为其创建公司账号；\n     •   自动分配客户端账号、公司邮箱、samba目录及权限、网站账号等；\n     •   以userAdd lifei的方式运行脚本，lifei为举例的员工姓名。",
+  "chars": 358
+ },
+ {
+  "id": 122,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 B-服务部署 › Linux项目任务清单 › SERVER01 TASK",
+  "text": "（三）SERVER01 TASK\n\n  1.NETWORK\n     •   请根据基本配置信息配置服务器的主机名，网卡IP地址配置、域名服务器、\n        网关等。\n2.SAMBA\n     •   创建samba共享，本地目录为/data/share1，要求：\n     •   共享名为share1。\n     •   仅允许zsuser用户能上传文件。\n     •   创建samba共享，本地目录为/data/public，要求：\n     •   共享名为public。\n     •   允许匿名访问。\n\n    • 所有用户都能上传文件。\n3.NFS\n   •    共享/data/share目录；\n   •    用于存储server01主机的web数据；\n   •    仅允许service01主机访问该共享。\n4.DNS\n   •    安装DNS服务相关软件包；\n   •    建立sdskills.com域，为所有除Internet区域的主机或服务器建立正\\反的域名\n        解析；\n   • 当出现无法解析的域名时，向域skills.com申请更高层次的解析。\n5.Webserver\n   •    安装web服务相关软件包；\n            由 Server01 提供 www.sdskills.com\n            skills 公司的门户网站；\n            使用 apache 服务；\n            网页文件放在/data/share/htdocs/skills；",
+  "chars": 685
+ },
+ {
+  "id": 123,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 B-服务部署 › Linux项目任务清单 › SERVER01 TASK",
+  "text": "    服务以用户 webuser 运行；\n            首页内容为“This is the front page of sdskills's website.”；\n            /htdocs/skills/staff.html 内容为“Staff Information”；\n            该页面需要员工的账号认证才能访问；\n   •    员工账号存储在ldap中，账号为zsuser、lsus\n            网站使用 https 协议；\n            SSL 使用 RServer 颁发的证书，颁发给:\n            C = CN\n            ST = China\n            L = ShangDong\n            O = skills\n            OU = Operations Departments\n            CN = *.skills.com\n            Sever01 的 CA 证书路径：/CA/cacert.pem\n            签发数字证书，颁发者：\n            C = CN；\n            O = Inc\n            OU = www.skills.com\n            CN = skill Global Root CA\n            客户端访问 https 时应无浏览器（含终端）安全警告信息；",
+  "chars": 672
+ },
+ {
+  "id": 124,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 B-服务部署 › Linux项目任务清单 › SERVER01 TASK",
+  "text": "    当用户使用 http 访问时自动跳转到 https 安全连接；\n              当用户使用 sdskills.com 或 any.sdskills.com（any 代表任意网址前缀）\n               访问时，自动跳转到 www.sdskills.com。\n6.SSH\n      •   安装SSH\n      •   仅允许client客户端进行ssh访问，其余所有主机的请求都应该拒绝；\n      •   配置client只能在Chinaskill23用户环境下可以免秘钥登录，端口号为3033，\n        并且拥有root控制权限；\n7.DBMS\n      •   在Server01上完成MariaDB数据库的安装，添加数据库root用户密码为\n          ChinaSkill23!\n      •   安装MariaDB数据库服务器组件；\n      •   MariaDB数据库管理员信息：User: root/ Password: Chinaskill20!；\n      •   安装MariaDB WEB管理面板“phpMyAdmin”，通过apache进行发布\n      •   安装phpMyAdmin，MariaDB的web管理面板组件；\n      •   安装apache，配置php环境，用于发布phpMyAdmin；",
+  "chars": 604
+ },
+ {
+  "id": 125,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 B-服务部署 › Linux项目任务清单 › SERVER02 TASK",
+  "text": "（四）SERVER02 TASK\n\n  1.NETWORK\n      •   请根据基本配置信息配置服务器的主机名，网卡IP地址配置、域名服务器、\n          网关等。\n2.Ftp\n      •   禁止使用不安全的FTP，请使用“CSK Global Root CA”证书颁发机构，颁发\n          的证书，启用FTPS服务；\n      •   用户webadmin，登录ftp服务器，根目录为/webdata/；\n      •   登录后限制在自己的根目录；\n      •   允许WEB管理员上传和下载文件，但是禁止上传后缀名为.doc .docx .xlsx\n          的文件。\n      •   限制用户的下载最大速度为100kb/s；最大同一IP在线人数为2人；\n      •   用于通过工具或者浏览器下载的最大速度不超过100kb/s\n     • 一个IP地址同时登陆的用户进程/人数不超过2人。\n3.MAIL\n      •   Postfix\n          •   sdskill.com的邮件发送服务器\n          •   支持smtps(465)协议连接，使用Rserver颁发的证书，证书路径\n              /CA/cacert.pem\n          •   创建邮箱账户“user1~user99”（共99个用户），密码为Chinaskill23!；\n\n     •    Dovecot\n          •    sdskill.com的邮件接收服务器；",
+  "chars": 682
+ },
+ {
+  "id": 126,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 B-服务部署 › Linux项目任务清单 › SERVER02 TASK",
+  "text": "•    支持imaps（993）协议连接，使用Rserver颁发的证书，证书路径\n               /CA/cacert.pem；\n          •    请保留至少两个用户已成功登录并能正常收发邮件，以方便测试.\n  4.SSH\n     •    安装SSH\n     •    仅允许client客户端进行ssh访问，其余所有主机的请求都应该拒绝；\n     •    配置client只能在Chinaskill23用户环境下可以免秘钥登录，端口号为4044，\n        并且拥有root控制权限；\n5. 部署 WordPress 论坛\n     •    搭建www.chinaskills.cn站点；\n     •    网页文件放在StorgeSrv服务器上；\n     •    在StorageSrv上安装MriaDB，在本机上安装PHP，发布WordPress网站；\n     •    MariaDB数据库管理员信息：User: root/ Password: Chinaskill21!",
+  "chars": 467
+ },
+ {
+  "id": 127,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 B-服务部署 › Linux项目任务清单 › SERVER03 TASK",
+  "text": "（五）SERVER03 TASK\n\n  1.NETWORK\n     •    请根据基本配置信息配置服务器的主机名，网卡IP地址配置、域名服务器、\n          网关等。\n2.chrony\n     •    配置为全网提供时间同步服务器\n     •    为除本机外的所有主机提供时间同步服务\n      • 使用ntpdate命令每隔5分钟同步一次时间。\n3.SSH\n     •    安装SSH\n     •    仅允许client客户端进行ssh访问，其余所有主机的请求都应该拒绝；\n     •    配置client只能在Chinaskill20用户环境下可以免秘钥登录，端口号为2233，\n         并且拥有root控制权限；\n4.OpenVPN\n\n     •        要求服务器日志记录客户端登录时间、用户名，格式如\n          “2023-04-10:08:10:30Successful authentication: username=\"vpnuser1\"”；\n     •    日志文件存放至/var/log/openvpn.log中；\n     •        创建用户vpnuser1，密码为123456，使用用户名密码认证，要求只能与\n          InsideCli客户端网段通信，允许访问StorageSrv主机上的SAMBA服务；\n     •        VPN地址范围为172.16.0.0/24，OPENVPN使用tcp 1194端口号进行工作。",
+  "chars": 669
+ },
+ {
+  "id": 128,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 B-服务部署 › Linux项目任务清单 › SERVER04 TASK",
+  "text": "（六）SERVER04 TASK\n\n  1.NETWORK\n      •   请根据基本配置信息配置服务器的主机名，网卡IP地址配置、域名服务器、\n          网关等。\n2.DNS\n      •   安装DNS相关服务软件包；\n      •   为域skills.com提供必要的域名解析\n      •   当非skills.com域的解析时，统一解析到Rserver连接Internet网段的IP地址或\n         Rserver.skills.com\n  3.Webserver\n      •   提供www.skills.com\n      •   skills公司的门户网站；\n      •   使用apache服务；\n      •   网页文件放在/htdocs/skills；\n      •   服务以用户webuser运行；\n      •   首页内容为“This is the front page of skills's website.”；\n      •   /htdocs/sdskills/staff.html内容为“Staff Information”；\n      •   该页面需要员工的账号认证才能访问；\n         员工账号存储在ldap中，账号为zsuser、lsus\n      •   网站使用https协议；",
+  "chars": 596
+ },
+ {
+  "id": 129,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 B-服务部署 › Linux项目任务清单 › SERVER04 TASK",
+  "text": "•   SSL使用RServer颁发的证书， 颁发给:\n              C = CN\n              ST = China\n              L = ShangDong\n              O = skills\n              OU = Operations Departments\n              CN = *.skills.cn\n      •   Rserver的CA证书路径：/CA/cacert.pem\n      •   签发数字证书，颁发者：\n              C = CN\n              O=    Inc\n             OU = www.skills.com\n             CN = skill Global Root CA\n      •   客户端访问https时应无浏览器（含终端）安全警告信息；\n      •   当用户使用http访问时自动跳转到https安全连接；\n      •   当用户使用skills.cn或any.skills.cn（any代表任意网址前缀）访问时，自动\n\n           跳转到www.skills.com。\n4.SSH\n   •       安装SSH\n   •       仅允许client客户端进行ssh访问，其余所有主机的请求都应该拒绝；",
+  "chars": 614
+ },
+ {
+  "id": 130,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 B-服务部署 › Linux项目任务清单 › SERVER04 TASK",
+  "text": "•       配置client只能在Chinaskill23用户环境下可以免秘钥登录，端口号为3344，\n           并且拥有root控制权限；\n5.LDAP\n   •       安装openldap,为apache服务提供账户认证；\n   •       创建chinaskills.cn目录服务，并创建用户组ldsgp,将zsuser、lsusr、wuusr。",
+  "chars": 189
+ },
+ {
+  "id": 131,
+  "source": "“网络系统管理”赛项(GZ073)样题3.txt",
+  "path": "模块 B-服务部署 › Linux项目任务清单 › IOMSrv 配置任务",
+  "text": "（七）IOMSrv 配置任务\n   图形界面登陆 IOMSrv 运维平台，登陆地址 http://192.168.10.150；\n          通过 Linux 代理模板，添加 Server01、Server02 操作系统监控对象，查看\n           运行状态。\n          通过中间件 apache 模板，添加 IIS 监控对象，查看运行状态。\n          通过新增 WEB 探测对象，监控门户网站 http://www.skills.com，查看运行\n           状态。\n          基于 Server01 上的门户网站业务，完成业务拓扑绘制，并在业务大屏上\n           呈现。",
+  "chars": 325
+ }
+]
