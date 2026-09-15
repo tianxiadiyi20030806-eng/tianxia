@@ -156,6 +156,35 @@ python3 eval_retrieval.py
 > 💡 这个「知道自己的系统哪里不行、为什么不行」的结论，
 > 比一个漂亮的准确率数字更有工程价值。
 
+### ⑧ MCP 工具封装
+
+将自研检索能力封装为**标准 MCP Server**，可被 Claude Desktop / Cursor / Cline
+等支持 MCP 的 AI 应用直接调用。
+
+**MCP 协议本质**：JSON-RPC 2.0 over stdio —— 从标准输入读消息、往标准输出写消息。
+
+**核心方法实现**：
+
+| 方法 | 作用 |
+|---|---|
+| `initialize` | 握手，返回协议版本与能力声明 |
+| `tools/list` | 返回工具清单（含 `inputSchema`） |
+| `tools/call` | 执行工具，结果以 `content` 数组返回 |
+
+**零依赖实现**：使用 Python 标准库 `sys` / `json` 完成，未引入 `mcp` SDK。
+
+```bash
+python3 test_mcp.py     # 测试客户端：完整走一遍握手 → 列工具 → 调用
+```
+
+**实测输出**：
+
+```
+✅ initialize 握手成功，服务器：knowledge-base-server v1.0.0
+✅ 服务器提供 1 个工具：search_knowledge_base
+✅ tools/call 返回检索结果（相关度 84.2，来源块 #20）
+```
+
 ## 运行
 
 **环境要求**：Python 3.x、系统安装 `poppler-utils`（提供 `pdftotext`）。**无需 pip 安装任何包。**
@@ -169,7 +198,10 @@ python3 chunk_docs.py        # 切块（输出 chunks.json）
 # 2. 检索效果评测（不需要 API key）
 python3 eval_retrieval.py
 
-# 3. 启动问答
+# 3. 测试 MCP Server（不需要 API key）
+python3 test_mcp.py
+
+# 4. 启动问答
 export DEEPSEEK_API_KEY=sk-你的key
 python3 rag.py
 ```
@@ -179,12 +211,16 @@ python3 rag.py
 ```
 rag-project/
 ├── README.md
+├── docs/
+│   └── zero-dependency-rag-notes.md   # 踩坑记录（技术博客）
 ├── build_corpus.py     # ① 文档提取：PDF / docx → 纯文本
 ├── clean_text.py       # ② 清洗修复：标题错位、目录剔除
 ├── chunk_docs.py       # ③ 切块：标题层级 + 面包屑 → chunks.json
 ├── chunks.json         # 知识块数据（131 块）
 ├── retrieval.py        # ④⑤ 分词 + 索引 + TF-IDF 检索（可复用模块）
 ├── eval_retrieval.py   # ⑦ 效果评测：28 题测试集，统计召回率
+├── mcp_server.py       # ⑧ MCP Server：把检索封装为标准 MCP 工具
+├── test_mcp.py         #     MCP 测试客户端
 └── rag.py              # ⑥ RAG 问答主程序（调用 retrieval.py）
 ```
 
@@ -196,7 +232,22 @@ rag-project/
   可引入向量检索（Embedding）做混合检索。
 - **无界面**：目前为命令行交互，可加 FastAPI 接口层与 Web 前端。
 
+## 踩坑记录
+
+实现过程中的 6 个技术坑与解法，已整理成文：
+
+📄 [**零依赖实现一个中文 RAG 系统：我踩过的 6 个坑**](docs/zero-dependency-rag-notes.md)
+
+| # | 坑 | 关键点 |
+|---|---|---|
+| 1 | PDF 标题被吞进上一段 | 正则加 `(?=[^\d])` 排除 IP，避免 82 个 IP 被误切 |
+| 2 | 看不见的换页符 `\f` | 伪装成缩进，导致面包屑污染 |
+| 3 | 目录污染检索 | 目录含所有标题，任何查询都会命中 |
+| 4 | 中文分词切碎 IP | ASCII 段需含小数点整体保留 |
+| 5 | 常见词灌水排序 | IDF 加权后 Top-1 分差从 2:1 升至 7:1 |
+| 6 | 评测暴露同义表达短板 | 直接提问 100%，改写提问 75% |
+
 ## 技术栈
 
 Python 3（标准库：`json` / `urllib` / `zipfile` / `xml.etree` / `re` / `subprocess`）、
-DeepSeek API、RAG、TF-IDF、中文 bigram 分词
+DeepSeek API、RAG、TF-IDF、中文 bigram 分词、MCP（Model Context Protocol）
