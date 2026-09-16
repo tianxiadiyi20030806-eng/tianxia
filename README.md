@@ -212,7 +212,8 @@ python3 rag.py
 rag-project/
 ├── README.md
 ├── docs/
-│   └── zero-dependency-rag-notes.md   # 踩坑记录（技术博客）
+│   ├── zero-dependency-rag-notes.md   # 踩坑记录（技术博客）
+│   └── mcp-入门.md                     # MCP 完整教程
 ├── build_corpus.py     # ① 文档提取：PDF / docx → 纯文本
 ├── clean_text.py       # ② 清洗修复：标题错位、目录剔除
 ├── chunk_docs.py       # ③ 切块：标题层级 + 面包屑 → chunks.json
@@ -237,6 +238,9 @@ rag-project/
 实现过程中的 6 个技术坑与解法，已整理成文：
 
 📄 [**零依赖实现一个中文 RAG 系统：我踩过的 6 个坑**](docs/zero-dependency-rag-notes.md)
+
+📘 [**MCP 从零讲透：用 150 行标准库代码理解 Model Context Protocol**](docs/mcp-入门.md)
+　— 为什么需要 MCP / 与 Function Calling 的区别 / 协议格式 / 逐条拆解通信过程 / 面试问答
 
 | # | 坑 | 关键点 |
 |---|---|---|

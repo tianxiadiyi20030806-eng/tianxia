@@ -34,6 +34,14 @@ Cursor、Cline 等）能够调用外部工具和数据源。
 
 注意：有些消息没有 id（叫"通知"，notification），服务器不需要回复。
 
+【怎么加一个新工具？改三个地方】
+
+    ① TOOLS 列表里加一个字典（工具声明）
+    ② 写一个处理函数
+    ③ 在 TOOL_HANDLERS 里注册
+
+    和 Function Calling 加工具是一模一样的模式。
+
 【怎么用】
 
 这个 server 通过 stdio 通信，所以要由 MCP 客户端启动，而不是手动运行。
@@ -57,6 +65,8 @@ retriever = Retriever()
 #    这是暴露给 AI 客户端的「工具清单」——
 #    和 Function Calling 里的 tools 参数是同一个东西，
 #    只是换成了 MCP 的 schema 格式（注意是 inputSchema，不是 parameters）
+#
+#    ★ 加工具的第 ① 处改动
 # ═══════════════════════════════════════════════════════
 
 TOOLS = [
@@ -83,11 +93,24 @@ TOOLS = [
             "required": ["query"],
         },
     },
+    {
+        "name": "get_stats",
+        "description": (
+            "获取知识库的统计信息，包括知识块数量、总字数、平均块长。"
+            "当用户询问知识库规模、有多少资料时使用。"
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {},
+        },
+    },
 ]
 
 
 # ═══════════════════════════════════════════════════════
 # 三、工具实现
+#
+#    ★ 加工具的第 ② 处改动：写一个处理函数
 # ═══════════════════════════════════════════════════════
 
 def call_search_knowledge_base(args):
@@ -117,8 +140,22 @@ def call_search_knowledge_base(args):
     return "\n".join(lines)
 
 
+def call_get_stats(args):
+    """返回知识库统计信息"""
+    n = len(retriever)
+    total = sum(len(item["text"]) for item in retriever.index)
+    return (
+        "知识库统计：\n"
+        "  知识块数量：" + str(n) + "\n"
+        "  总字数：" + str(total) + "\n"
+        "  平均块长：" + str(total // n) + " 字"
+    )
+
+
+# ★ 加工具的第 ③ 处改动：注册到处理表
 TOOL_HANDLERS = {
     "search_knowledge_base": call_search_knowledge_base,
+    "get_stats": call_get_stats,
 }
 
 

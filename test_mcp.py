@@ -93,25 +93,30 @@ def main():
         print("  ✅ 服务器提供 " + str(len(names)) + " 个工具：" + ", ".join(names))
         print()
 
-    # ── 第 4 步：tools/call ──
-    send({
-        "jsonrpc": "2.0", "id": 3, "method": "tools/call",
-        "params": {
-            "name": "search_knowledge_base",
-            "arguments": {"query": "DHCP中继怎么配", "top_k": 2},
-        },
-    }, "tools/call（调用检索工具）")
-    call = recv("tools/call 响应")
+    # ── 第 4 步：tools/call —— 把两个工具都调一遍 ──
+    calls = [
+        (3, "search_knowledge_base", {"query": "DHCP中继怎么配", "top_k": 2}),
+        (4, "get_stats", {}),
+    ]
 
-    print("=" * 68)
-    if call and "result" in call:
-        content = call["result"].get("content", [])
-        if content:
-            print("✅ 检索结果：")
-            print()
-            print(content[0]["text"])
-    else:
-        print("❌ 调用失败")
+    for req_id, tool_name, arguments in calls:
+        send({
+            "jsonrpc": "2.0", "id": req_id, "method": "tools/call",
+            "params": {"name": tool_name, "arguments": arguments},
+        }, "tools/call → " + tool_name)
+        resp = recv("tools/call 响应")
+
+        print("─" * 68)
+        if resp and "result" in resp:
+            content = resp["result"].get("content", [])
+            if content:
+                print("✅ " + tool_name + " 执行成功：")
+                print()
+                print(content[0]["text"])
+        else:
+            print("❌ " + tool_name + " 调用失败")
+        print("─" * 68)
+        print()
 
     print("=" * 68)
 
