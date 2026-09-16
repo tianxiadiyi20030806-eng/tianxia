@@ -16,3 +16,6 @@ xuexi/
 *.deb
 *.zip
 .DS_Store
+
+# 虚拟环境（本机专属，不要提交）
+.venv/
