@@ -1,4 +1,4 @@
-# MCP 从零讲透：用 150 行标准库代码理解 Model Context Protocol
+ # MCP 从零讲透：用 150 行标准库代码理解 Model Context Protocol
 
 > 本文配套代码：[`mcp_server.py`](../mcp_server.py) 与 [`test_mcp.py`](../test_mcp.py)
 > 全程只用 Python 标准库，未引入 `mcp` SDK。
