@@ -222,7 +222,12 @@ rag-project/
 ├── eval_retrieval.py   # ⑦ 效果评测：28 题测试集，统计召回率
 ├── mcp_server.py       # ⑧ MCP Server：把检索封装为标准 MCP 工具
 ├── test_mcp.py         #     MCP 测试客户端
-└── rag.py              # ⑥ RAG 问答主程序（调用 retrieval.py）
+├── api.py              # ⑨ FastAPI 服务：检索 + RAG 问答接口
+├── rag.py              # ⑥ RAG 问答主程序（命令行）
+├── examples/           # 学习示例（非项目功能）
+│   ├── mcp_最小实现.py
+│   └── langgraph_*.py
+└── docs/               # 技术文档
 ```
 
 ## 已知局限与改进方向
