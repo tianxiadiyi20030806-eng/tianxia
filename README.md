@@ -46,7 +46,12 @@
         ↓  ⑤ 检索 Top-3         ← 用户提问
    相关段落
         ↓  ⑥ 拼提示词 + 调用 LLM
-     带来源的回答
+   带来源的回答
+        ↓
+   三种交付形态：
+        ├─ ⑦ 效果评测    28 题测试集，量化召回率
+        ├─ ⑧ MCP Server  封装为标准工具，供 AI 客户端调用
+        └─ ⑨ FastAPI     封装为 HTTP 服务，供任意程序调用
 ```
 
 ## 核心实现
@@ -185,6 +190,33 @@ python3 test_mcp.py     # 测试客户端：完整走一遍握手 → 列工具 
 ✅ tools/call 返回检索结果（相关度 84.2，来源块 #20）
 ```
 
+### ⑨ 服务化（FastAPI）
+
+把检索与 RAG 问答封装成 HTTP 服务，任何程序都能通过网络调用。
+
+| 接口 | 方法 | 说明 |
+|---|---|---|
+| `/` | GET | 服务状态 |
+| `/search` | GET | 检索（只返回相关段落，不调大模型） |
+| `/stats` | GET | 知识库统计 |
+| `/ask` | POST | 完整问答（检索 + 调大模型生成回答） |
+
+**三个工程要点：**
+
+- **Pydantic 定义请求体**：自动校验参数类型。客户端发 `{}` 或类型不对，
+  FastAPI 自动返回 422 和具体原因，不用写一行校验代码
+- **API key 从环境变量读取**：不硬编码。这是"后端 API"存在的核心理由之一——
+  如果让前端直接调大模型，key 会暴露在浏览器里
+- **自动生成交互式文档**：访问 `/docs` 就能在浏览器里测试所有接口
+
+```bash
+uvicorn api:app --host 0.0.0.0 --port 8000 --reload
+# 浏览器打开 http://127.0.0.1:8000/docs
+```
+
+**为什么 `/ask` 用 POST 而不是 GET**：问题可能很长（URL 有长度限制），
+且 URL 会被服务器日志记录。
+
 ## 运行
 
 **环境要求**：Python 3.x、系统安装 `poppler-utils`（提供 `pdftotext`）。**无需 pip 安装任何包。**
@@ -225,9 +257,15 @@ rag-project/
 ├── api.py              # ⑨ FastAPI 服务：检索 + RAG 问答接口
 ├── rag.py              # ⑥ RAG 问答主程序（命令行）
 ├── examples/           # 学习示例（非项目功能）
-│   ├── mcp_最小实现.py
-│   └── langgraph_*.py
-└── docs/               # 技术文档
+│   ├── README.md
+│   ├── 先看合并是什么.py               # 用纯 Python 讲清"状态合并"
+│   ├── mcp_最小实现.py                 # 35 行看懂 MCP 协议
+│   ├── langgraph_01_基础三概念.py      # State / Node / Edge
+│   ├── langgraph_02_状态累积.py
+│   ├── langgraph_03_合并器.py          # 覆盖 vs 追加
+│   ├── langgraph_04_三场景对比.py
+│   └── langgraph_agent.py              # 用状态图重写 Agent 循环
+└── .venv/              # 虚拟环境（已 gitignore）
 ```
 
 ## 已知局限与改进方向
@@ -259,4 +297,5 @@ rag-project/
 ## 技术栈
 
 Python 3（标准库：`json` / `urllib` / `zipfile` / `xml.etree` / `re` / `subprocess`）、
-DeepSeek API、RAG、TF-IDF、中文 bigram 分词、MCP（Model Context Protocol）
+DeepSeek API、RAG、TF-IDF、中文 bigram 分词、MCP（Model Context Protocol）、
+FastAPI、Pydantic、LangGraph（学习实践）
